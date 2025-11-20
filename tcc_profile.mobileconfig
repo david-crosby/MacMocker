@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadDescription</key>
+			<string>Grants macOS Test Suite accessibility and screen recording permissions</string>
+			<key>PayloadDisplayName</key>
+			<string>macOS Test Suite TCC Permissions</string>
+			<key>PayloadIdentifier</key>
+			<string>uk.co.bing-bong.macmocker.tcc</string>
+			<key>PayloadOrganization</key>
+			<string>Bing Bong</string>
+			<key>PayloadType</key>
+			<string>com.apple.TCC.configuration-profile-policy</string>
+			<key>PayloadUUID</key>
+			<string>9E8E8E8E-8E8E-8E8E-8E8E-8E8E8E8E8E8E</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>Services</key>
+			<dict>
+				<key>Accessibility</key>
+				<array>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "uk.co.bing-bong.macmocker" and anchor apple generic and certificate leaf[subject.CN] = "Mac Developer"</string>
+						<key>Comment</key>
+						<string>Allow macOS Test Suite to control the computer</string>
+						<key>Identifier</key>
+						<string>uk.co.bing-bong.macmocker</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.apple.osascript" and anchor apple</string>
+						<key>Comment</key>
+						<string>Allow osascript for AppleScript automation</string>
+						<key>Identifier</key>
+						<string>com.apple.osascript</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.apple.Terminal" and anchor apple</string>
+						<key>Comment</key>
+						<string>Allow Terminal for test execution</string>
+						<key>Identifier</key>
+						<string>com.apple.Terminal</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "org.python.python" and anchor apple generic</string>
+						<key>Comment</key>
+						<string>Allow Python for test execution</string>
+						<key>Identifier</key>
+						<string>org.python.python</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+				</array>
+				<key>ScreenCapture</key>
+				<array>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "uk.co.bing-bong.macmocker" and anchor apple generic and certificate leaf[subject.CN] = "Mac Developer"</string>
+						<key>Comment</key>
+						<string>Allow macOS Test Suite to capture screenshots</string>
+						<key>Identifier</key>
+						<string>uk.co.bing-bong.macmocker</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.apple.screencapture" and anchor apple</string>
+						<key>Comment</key>
+						<string>Allow screencapture utility</string>
+						<key>Identifier</key>
+						<string>com.apple.screencapture</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.apple.Terminal" and anchor apple</string>
+						<key>Comment</key>
+						<string>Allow Terminal for test execution</string>
+						<key>Identifier</key>
+						<string>com.apple.Terminal</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "org.python.python" and anchor apple generic</string>
+						<key>Comment</key>
+						<string>Allow Python for test execution</string>
+						<key>Identifier</key>
+						<string>org.python.python</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Grants macOS Test Suite the necessary TCC permissions for automated testing</string>
+	<key>PayloadDisplayName</key>
+	<string>macOS Test Suite TCC Profile</string>
+	<key>PayloadIdentifier</key>
+	<string>uk.co.bing-bong.macmocker.profile</string>
+	<key>PayloadOrganization</key>
+	<string>Bing Bong</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>1A1A1A1A-1A1A-1A1A-1A1A-1A1A1A1A1A1A</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

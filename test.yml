@@ -1,0 +1,87 @@
+name: MacMocker Device Testing
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      config:
+        description: 'Test configuration to run'
+        required: true
+        default: 'quick_tests.yaml'
+        type: choice
+        options:
+          - quick_tests.yaml
+          - full_tests.yaml
+
+jobs:
+  test-macos:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+      
+      - name: Install dependencies
+        run: |
+          uv pip install --system -e .
+      
+      - name: Grant accessibility permissions
+        run: |
+          # Note: In GitHub Actions, full accessibility permissions may not be available
+          # This step documents what would be needed in a real deployment
+          echo "Accessibility permissions would be granted via TCC profile in production"
+      
+      - name: Determine test configuration
+        id: config
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "config=${{ github.event.inputs.config }}" >> $GITHUB_OUTPUT
+          else
+            echo "config=quick_tests.yaml" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Run test suite
+        run: |
+          python3 main.py \
+            --config config/${{ steps.config.outputs.config }} \
+            --artifacts-dir ${{ github.workspace }}/test-artifacts \
+            --log-level INFO
+        continue-on-error: true
+        id: tests
+      
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts-${{ github.run_number }}
+          path: test-artifacts/
+          retention-days: 7
+      
+      - name: Post results to Teams
+        if: always() && env.TEAMS_WEBHOOK_URL != ''
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        run: |
+          # Results are automatically posted by the test suite if webhook is configured
+          echo "Results posted to Teams webhook"
+      
+      - name: Check test results
+        if: steps.tests.outcome == 'failure'
+        run: |
+          echo "Tests failed, check artifacts for details"
+          exit 1
