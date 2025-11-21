@@ -1,70 +1,25 @@
 suite_name: "MacMocker Quick Tests"
-
+artifacts_dir: "~/macmocker_artifacts"
 global_timeout: 600
 
-artifacts_retention_days: 7
-
 reporting:
+  formats:
+    - text
+    - json
   teams_webhook: ""
-  api_url: ""
-  api_token: ""
+  api_endpoint: ""
+  api_key: ""
 
 tests:
   - module: "tests.network.network_test.NetworkTest"
     enabled: true
     timeout: 60
-    screenshot_on_failure: true
     urls:
-      - "https://www.apple.com"
       - "https://www.google.com"
-      - "https://www.github.com"
-    test_dns: true
-    test_speed: false
-    dns_test_domains:
-      - "www.apple.com"
-      - "www.google.com"
-    url_timeout: 10
-    max_response_time_ms: 5000
-    delay_after: 2
+      - "https://www.apple.com"
+    request_timeout: 10
 
-  - module: "tests.applications.application_launch_test.ApplicationLaunchTest"
+  - module: "tests.applications.word_test.WordTest"
     enabled: true
-    timeout: 120
-    screenshot_on_failure: true
-    app_name: "Safari"
-    process_name: "Safari"
-    launch_wait_time: 5
-    process_start_timeout: 30
-    monitor_logs: true
+    timeout: 180
     close_after_test: true
-    ready_checks:
-      window_visible: true
-      menu_bar_loaded: true
-      no_crash_dialogs: true
-      additional_wait: 2
-    error_patterns:
-      - "error"
-      - "crash"
-      - "exception"
-    delay_after: 2
-
-  - module: "tests.applications.application_launch_test.ApplicationLaunchTest"
-    enabled: true
-    timeout: 120
-    screenshot_on_failure: true
-    app_name: "Mail"
-    process_name: "Mail"
-    launch_wait_time: 5
-    process_start_timeout: 30
-    monitor_logs: true
-    close_after_test: true
-    ready_checks:
-      window_visible: true
-      menu_bar_loaded: true
-      no_crash_dialogs: true
-      additional_wait: 2
-    error_patterns:
-      - "error"
-      - "crash"
-      - "exception"
-    delay_after: 0

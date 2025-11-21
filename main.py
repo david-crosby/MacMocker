@@ -1,108 +1,80 @@
 #!/usr/bin/env python3
-"""
-MacMocker
-Main entry point for running macOS device tests
-"""
 
 import sys
 import logging
-from pathlib import Path
 import argparse
-from datetime import datetime
+from pathlib import Path
+
+from core.config_loader import ConfigLoader
+from core.test_runner import TestRunner
+from core.reporter import Reporter
 
 
-def setup_logging(log_level: str, log_file: Path):
-    """Configure logging for the test suite"""
-    numeric_level = getattr(logging, log_level.upper(), None)
-    if not isinstance(numeric_level, int):
-        raise ValueError(f"Invalid log level: {log_level}")
-    
-    log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    
-    handlers = [
-        logging.StreamHandler(sys.stdout),
-        logging.FileHandler(log_file)
-    ]
+def setup_logging(log_level: str):
+    numeric_level = getattr(logging, log_level.upper(), logging.INFO)
     
     logging.basicConfig(
         level=numeric_level,
-        format=log_format,
-        handlers=handlers
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
     )
 
 
 def main():
-    """Main entry point"""
-    parser = argparse.ArgumentParser(
-        description="MacMocker - Interactive macOS device testing for CI/CD workflows",
-        formatter_class=argparse.RawDescriptionHelpFormatter
-    )
-    
+    parser = argparse.ArgumentParser(description='MacMocker - macOS Device Testing Suite')
     parser.add_argument(
-        "-c", "--config",
-        type=Path,
+        '--config',
         required=True,
-        help="Path to test configuration YAML file"
-    )
-    
-    parser.add_argument(
-        "-a", "--artifacts-dir",
         type=Path,
-        default=Path.home() / "macmocker_artifacts",
-        help="Base directory for test artifacts (default: ~/macmocker_artifacts)"
+        help='Path to configuration file'
     )
-    
     parser.add_argument(
-        "-l", "--log-level",
-        choices=["DEBUG", "INFO", "WARNING", "ERROR"],
-        default="INFO",
-        help="Logging level (default: INFO)"
+        '--log-level',
+        default='INFO',
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
+        help='Logging level'
     )
-    
     parser.add_argument(
-        "--version",
-        action="version",
-        version="MacMocker v0.1.0"
+        '--artifacts-dir',
+        type=Path,
+        help='Override artifacts directory'
     )
-    
+
     args = parser.parse_args()
-    
+
+    setup_logging(args.log_level)
+    logger = logging.getLogger("MacMocker")
+
     if not args.config.exists():
-        print(f"Error: Configuration file not found: {args.config}")
-        return 1
-    
-    args.artifacts_dir.mkdir(parents=True, exist_ok=True)
-    
-    log_file = args.artifacts_dir / f"macmocker_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-    setup_logging(args.log_level, log_file)
-    
-    logger = logging.getLogger(__name__)
-    logger.info("=" * 80)
-    logger.info("MacMocker Starting")
-    logger.info("=" * 80)
-    logger.info(f"Configuration: {args.config}")
-    logger.info(f"Artifacts directory: {args.artifacts_dir}")
-    logger.info(f"Log level: {args.log_level}")
-    
+        logger.error(f"Configuration file not found: {args.config}")
+        sys.exit(1)
+
     try:
-        from core.test_runner import TestRunner
+        config = ConfigLoader(args.config)
         
-        runner = TestRunner(args.config, args.artifacts_dir)
-        exit_code = runner.run()
+        if args.artifacts_dir:
+            config.config['artifacts_dir'] = str(args.artifacts_dir)
+
+        logger.info(f"Starting {config.suite_name}")
         
-        logger.info("=" * 80)
-        logger.info(f"Test suite completed with exit code: {exit_code}")
-        logger.info("=" * 80)
+        runner = TestRunner(config)
+        results = runner.run_all_tests()
         
-        return exit_code
+        reporter = Reporter(results, runner.artifacts_dir, config.reporting)
+        reporter.generate_all_reports()
         
-    except KeyboardInterrupt:
-        logger.warning("Test suite interrupted by user")
-        return 130
+        summary = runner.summary
+        logger.info(f"Tests completed: {summary['passed']}/{summary['total']} passed")
+        
+        if summary['failed'] > 0:
+            sys.exit(1)
+        
+        sys.exit(0)
+
     except Exception as e:
-        logger.exception("Fatal error running test suite")
-        return 1
+        logger.error(f"Fatal error: {e}", exc_info=True)
+        sys.exit(2)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

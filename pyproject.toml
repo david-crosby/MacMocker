@@ -1,23 +1,21 @@
 [project]
 name = "macmocker"
-version = "0.1.0"
-description = "MacMocker - Modular macOS device testing suite for CI/CD workflows"
-authors = [{name = "David Crosby", email = "bing@bing-bong.co.uk"}]
+version = "1.0.0"
+description = "macOS device testing suite"
+authors = [
+    {name = "David Crosby", email = "bing@bing-bong.co.uk"}
+]
 requires-python = ">=3.10"
 dependencies = [
     "pyyaml>=6.0",
     "requests>=2.31.0",
     "pillow>=10.0.0",
-    "pyobjc-framework-Cocoa>=10.0",
-    "pyobjc-framework-Quartz>=10.0",
-    "atomacos>=3.2.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.4.0",
     "black>=23.0.0",
-    "ruff>=0.1.0",
 ]
 
 [build-system]
@@ -26,6 +24,7 @@ build-backend = "hatchling.build"
 
 [tool.black]
 line-length = 100
+target-version = ['py310']
 
-[tool.ruff]
-line-length = 100
+[project.urls]
+Repository = "https://github.com/david-crosby/macmocker"

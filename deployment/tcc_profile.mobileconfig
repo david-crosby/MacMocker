@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadDescription</key>
+            <string>Grants accessibility and screen recording permissions for MacMocker</string>
+            <key>PayloadDisplayName</key>
+            <string>MacMocker TCC Permissions</string>
+            <key>PayloadIdentifier</key>
+            <string>uk.co.bing-bong.macmocker.tcc</string>
+            <key>PayloadType</key>
+            <string>com.apple.TCC.configuration-profile-policy</string>
+            <key>PayloadUUID</key>
+            <string>E3B8F9D1-4C2E-4A5F-9B8D-C7E6F5A4B3D2</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>Services</key>
+            <dict>
+                <key>Accessibility</key>
+                <array>
+                    <dict>
+                        <key>Allowed</key>
+                        <true/>
+                        <key>CodeRequirement</key>
+                        <string>identifier "com.apple.Terminal"</string>
+                        <key>Identifier</key>
+                        <string>com.apple.Terminal</string>
+                        <key>IdentifierType</key>
+                        <string>bundleID</string>
+                    </dict>
+                    <dict>
+                        <key>Allowed</key>
+                        <true/>
+                        <key>CodeRequirement</key>
+                        <string>identifier "com.apple.osascript"</string>
+                        <key>Identifier</key>
+                        <string>com.apple.osascript</string>
+                        <key>IdentifierType</key>
+                        <string>bundleID</string>
+                    </dict>
+                </array>
+                <key>ScreenCapture</key>
+                <array>
+                    <dict>
+                        <key>Allowed</key>
+                        <true/>
+                        <key>CodeRequirement</key>
+                        <string>identifier "com.apple.Terminal"</string>
+                        <key>Identifier</key>
+                        <string>com.apple.Terminal</string>
+                        <key>IdentifierType</key>
+                        <string>bundleID</string>
+                    </dict>
+                </array>
+            </dict>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Configures TCC permissions for MacMocker testing suite</string>
+    <key>PayloadDisplayName</key>
+    <string>MacMocker TCC Configuration</string>
+    <key>PayloadIdentifier</key>
+    <string>uk.co.bing-bong.macmocker</string>
+    <key>PayloadOrganization</key>
+    <string>Bing Bong</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>A1B2C3D4-E5F6-G7H8-I9J0-K1L2M3N4O5P6</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>

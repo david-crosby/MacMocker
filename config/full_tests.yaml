@@ -1,171 +1,35 @@
 suite_name: "MacMocker Full Test Suite"
-
-global_timeout: 86400
-
-artifacts_retention_days: 30
+artifacts_dir: "~/macmocker_artifacts"
+global_timeout: 3600
 
 reporting:
+  formats:
+    - text
+    - json
   teams_webhook: ""
-  api_url: ""
-  api_token: ""
+  api_endpoint: ""
+  api_key: ""
 
 tests:
   - module: "tests.network.network_test.NetworkTest"
     enabled: true
-    timeout: 300
-    screenshot_on_failure: true
+    timeout: 120
     urls:
-      - "https://www.apple.com"
       - "https://www.google.com"
-      - "https://www.github.com"
+      - "https://www.apple.com"
+      - "https://github.com"
       - "https://www.microsoft.com"
-      - "https://www.cloudflare.com"
-      - "https://www.amazon.com"
-    test_dns: true
-    test_speed: true
-    dns_test_domains:
-      - "www.apple.com"
-      - "www.google.com"
-      - "www.microsoft.com"
-    url_timeout: 15
-    max_response_time_ms: 3000
-    speed_test_url: "http://speedtest.tele2.net/10MB.zip"
-    delay_after: 5
+    request_timeout: 15
 
-  - module: "tests.applications.application_launch_test.ApplicationLaunchTest"
-    enabled: true
-    timeout: 180
-    screenshot_on_failure: true
-    app_name: "Safari"
-    process_name: "Safari"
-    launch_wait_time: 10
-    process_start_timeout: 45
-    monitor_logs: true
-    close_after_test: true
-    ready_checks:
-      window_visible: true
-      menu_bar_loaded: true
-      no_crash_dialogs: true
-      additional_wait: 5
-    error_patterns:
-      - "error"
-      - "crash"
-      - "exception"
-      - "failed"
-    delay_after: 5
-
-  - module: "tests.applications.application_launch_test.ApplicationLaunchTest"
-    enabled: true
-    timeout: 180
-    screenshot_on_failure: true
-    app_name: "Mail"
-    process_name: "Mail"
-    launch_wait_time: 10
-    process_start_timeout: 45
-    monitor_logs: true
-    close_after_test: true
-    ready_checks:
-      window_visible: true
-      menu_bar_loaded: true
-      no_crash_dialogs: true
-      additional_wait: 5
-    error_patterns:
-      - "error"
-      - "crash"
-      - "exception"
-    delay_after: 5
-
-  - module: "tests.applications.word_test.MicrosoftWordTest"
+  - module: "tests.applications.word_test.WordTest"
     enabled: true
     timeout: 300
-    screenshot_on_failure: true
-    test_content: "This is a comprehensive test document created by MacMocker. It validates that Microsoft Word can create, save, open, and edit documents correctly."
-    cleanup: true
-    delay_after: 5
 
-  - module: "tests.applications.excel_test.MicrosoftExcelTest"
+  - module: "tests.applications.excel_test.ExcelTest"
     enabled: true
     timeout: 300
-    screenshot_on_failure: true
-    test_headers:
-      - "Product"
-      - "Quantity"
-      - "Status"
-    test_data:
-      - ["Widget A", "150", "In Stock"]
-      - ["Widget B", "75", "In Stock"]
-      - ["Widget C", "200", "Back Order"]
-    cleanup: true
-    delay_after: 5
 
-  - module: "tests.applications.outlook_test.MicrosoftOutlookTest"
-    enabled: false
-    timeout: 600
-    screenshot_on_failure: true
-    test_email_address: "test@example.com"
-    email_body: "This is an automated test email sent by MacMocker to verify Outlook functionality."
-    email_wait_time: 30
-    receive_check_attempts: 3
-    delete_test_email: true
-    close_after_test: true
-    delay_after: 5
-
-  - module: "tests.applications.application_launch_test.ApplicationLaunchTest"
+  - module: "tests.applications.outlook_test.OutlookTest"
     enabled: true
-    timeout: 180
-    screenshot_on_failure: true
-    app_name: "Calendar"
-    process_name: "Calendar"
-    launch_wait_time: 8
-    process_start_timeout: 40
-    monitor_logs: true
-    close_after_test: true
-    ready_checks:
-      window_visible: true
-      menu_bar_loaded: true
-      no_crash_dialogs: true
-      additional_wait: 3
-    error_patterns:
-      - "error"
-      - "crash"
-    delay_after: 5
-
-  - module: "tests.applications.application_launch_test.ApplicationLaunchTest"
-    enabled: true
-    timeout: 180
-    screenshot_on_failure: true
-    app_name: "Notes"
-    process_name: "Notes"
-    launch_wait_time: 8
-    process_start_timeout: 40
-    monitor_logs: true
-    close_after_test: true
-    ready_checks:
-      window_visible: true
-      menu_bar_loaded: true
-      no_crash_dialogs: true
-      additional_wait: 3
-    error_patterns:
-      - "error"
-      - "crash"
-    delay_after: 5
-
-  - module: "tests.applications.application_launch_test.ApplicationLaunchTest"
-    enabled: true
-    timeout: 180
-    screenshot_on_failure: true
-    app_name: "System Settings"
-    process_name: "System Settings"
-    launch_wait_time: 10
-    process_start_timeout: 45
-    monitor_logs: true
-    close_after_test: true
-    ready_checks:
-      window_visible: true
-      menu_bar_loaded: true
-      no_crash_dialogs: true
-      additional_wait: 5
-    error_patterns:
-      - "error"
-      - "crash"
-    delay_after: 0
+    timeout: 300
+    test_email: "your-test-email@example.com"
