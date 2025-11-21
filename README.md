@@ -107,6 +107,10 @@ reporting:
   api_key: "your-api-key"
 ```
 
+**Future Additions** 
+
+- Add reproting via Jamf Extension Attributes
+
 ## Deployment
 
 ### Manual Installation
